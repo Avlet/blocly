@@ -1,0 +1,26 @@
+---
+// Generic bordered surface used by the grid sections. Cards are built
+// to tile into a hairline grid: each carries a right + bottom border,
+// and the grid wrapper supplies the top + left edges.
+interface Props {
+  class?: string;
+  /** Reveal a lime top accent on hover (used by Services). */
+  hoverAccent?: boolean;
+}
+const { class: className = "", hoverAccent = false } = Astro.props;
+---
+
+<div
+  class:list={[
+    "group relative border-line p-7 transition-colors duration-300",
+    hoverAccent && "hover:bg-surface-2/40",
+    className,
+  ]}
+>
+  {
+    hoverAccent && (
+      <span class="absolute inset-x-0 top-0 h-px scale-x-0 bg-lime transition-transform duration-300 group-hover:scale-x-100" />
+    )
+  }
+  <slot />
+</div>

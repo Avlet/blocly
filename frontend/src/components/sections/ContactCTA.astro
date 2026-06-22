@@ -1,0 +1,41 @@
+---
+import Button from "@/components/ui/Button.astro";
+import Eyebrow from "@/components/ui/Eyebrow.astro";
+import ContactForm from '@/components/ui/ContactForm.astro';
+import { content } from "@/data/content";
+
+const { eyebrow, headlineTop, headlineAccent, body, primaryCta, secondaryCta } =
+  content.contact;
+---
+
+<section id="contact" class="relative scroll-mt-20 overflow-hidden border-t border-line">
+  <div
+    class="pointer-events-none absolute left-1/2 top-40 h-[420px] w-[620px] -translate-x-1/2 rounded-full bg-lime/10 blur-[150px]"
+    aria-hidden="true"
+  >
+  </div>
+
+  <div class="container-bl relative py-24 md:py-32">
+    <div class="text-center">
+      <Eyebrow class="text-center">{eyebrow}</Eyebrow>
+
+      <h2 class="heading text-display mx-auto mt-6 max-w-[18ch]">
+        <span>{headlineTop} </span><span class="text-lime">{headlineAccent}</span>
+      </h2>
+
+      <p class="mx-auto mt-7 max-w-2xl text-base leading-relaxed text-fg-muted md:text-lg">
+        {body}
+      </p>
+
+      <div class="mt-10 flex flex-wrap justify-center gap-4">
+        <Button href={primaryCta.href}>{primaryCta.label}</Button>
+        <Button href={secondaryCta.href} variant="secondary">
+          {secondaryCta.label}
+        </Button>
+      </div>
+    </div>
+
+    <!-- Contact form, wired to the FastAPI backend -->
+    <ContactForm />
+  </div>
+</section>

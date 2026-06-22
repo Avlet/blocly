@@ -1,0 +1,157 @@
+/* ============================================================
+   Blocly — Global stylesheet & design system (Tailwind v4)
+   Single source of truth for all design tokens.
+   Tailwind v4 is CSS-first: tokens live here, in @theme.
+   ============================================================ */
+
+@import "tailwindcss";
+
+@theme {
+  /* ---- Surfaces (dark, high-contrast) ---- */
+  --color-ink: #09090a; /* page background — near black */
+  --color-surface: #0f0f11; /* header / elevated panels */
+  --color-surface-2: #151517; /* cards */
+  --color-line: #ffffff14; /* hairline borders  (~8% white) */
+  --color-line-strong: #ffffff26; /* emphasized borders (~15% white) */
+
+  /* ---- Accent (the single acid-lime) ---- */
+  --color-lime: #c7f931; /* primary accent */
+  --color-lime-dim: #b2e41f; /* hover / pressed */
+
+  /* ---- Foreground / text ---- */
+  --color-fg: #fafaf9; /* headlines & primary text */
+  --color-fg-muted: #9a9aa2; /* body copy, section intros */
+  --color-fg-subtle: #65656d; /* low-emphasis / card body */
+
+  /* ---- Typography ---- */
+  --font-display: "Anton", "Arial Narrow", sans-serif; /* condensed caps */
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif; /* body */
+  --font-mono: "Space Mono", ui-monospace, monospace; /* labels, tags */
+
+  /* ---- Motion ---- */
+  --animate-marquee: marquee 38s linear infinite;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* ============================================================
+   Base layer
+   ============================================================ */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: 5rem; /* offset sticky header on anchor jumps */
+  }
+
+  body {
+    background-color: var(--color-ink);
+    color: var(--color-fg-muted);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background-color: var(--color-lime);
+    color: #0a0a0a;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-lime);
+    outline-offset: 3px;
+  }
+
+  /* Custom scrollbar to match the dark theme */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-ink);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #26262b;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #34343a;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+    }
+  }
+}
+
+/* ============================================================
+   Reusable foundation primitives
+   (Component-level UI primitives arrive in Step 3.)
+   ============================================================ */
+@layer components {
+  /* Consistent page gutter + max width */
+  .container-bl {
+    width: 100%;
+    max-width: 80rem; /* 1280px */
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+  @media (min-width: 768px) {
+    .container-bl {
+      padding-inline: 2rem;
+    }
+  }
+  @media (min-width: 1280px) {
+    .container-bl {
+      padding-inline: 2.5rem;
+    }
+  }
+
+  /* Lime mono section label, e.g. "OUR SERVICES" */
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    line-height: 1;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--color-lime);
+  }
+
+  /* Shared display-heading treatment */
+  .heading {
+    font-family: var(--font-display);
+    font-weight: 400;
+    line-height: 0.92;
+    text-transform: uppercase;
+    letter-spacing: 0.005em;
+    color: var(--color-fg);
+  }
+}
+
+/* ============================================================
+   Fluid display type scale (clamp-based, responsive)
+   Pair with .heading — e.g. <h1 class="heading text-hero">
+   ============================================================ */
+@utility text-hero {
+  font-size: clamp(2.75rem, 9vw, 6.75rem);
+}
+@utility text-display {
+  font-size: clamp(2.1rem, 5.2vw, 4rem);
+}
+@utility text-headline {
+  font-size: clamp(1.5rem, 3vw, 2.4rem);
+}

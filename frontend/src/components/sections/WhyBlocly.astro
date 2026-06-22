@@ -1,0 +1,30 @@
+---
+import SectionContainer from "@/components/ui/SectionContainer.astro";
+import Eyebrow from "@/components/ui/Eyebrow.astro";
+import { content } from "@/data/content";
+
+const { eyebrow, headline, items } = content.why;
+---
+
+<SectionContainer id="why-blocly" bordered>
+  <Eyebrow>{eyebrow}</Eyebrow>
+  <h2 class="heading text-display mt-5 max-w-[16ch]">{headline}</h2>
+
+  <div class="mt-16 grid border-l border-t border-line md:grid-cols-2 lg:grid-cols-3">
+    {
+      items.map((reason) => (
+        <article class="group border-b border-r border-line p-8 transition-colors duration-300 hover:bg-surface-2/40">
+          <span class="heading block text-5xl text-lime/15 transition-colors duration-300 group-hover:text-lime/40">
+            {reason.id}
+          </span>
+          <h3 class="mt-5 font-mono text-xs uppercase tracking-[0.16em] text-fg">
+            {reason.title}
+          </h3>
+          <p class="mt-4 text-sm leading-relaxed text-fg-subtle">
+            {reason.description}
+          </p>
+        </article>
+      ))
+    }
+  </div>
+</SectionContainer>

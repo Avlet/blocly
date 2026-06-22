@@ -1,0 +1,94 @@
+---
+import { content } from "@/data/content";
+
+const { name, nav } = content.site;
+const ctaClass =
+  "inline-flex items-center justify-center rounded-[2px] bg-lime px-5 py-2.5 font-mono text-xs font-bold uppercase tracking-[0.15em] text-ink transition-colors duration-200 hover:bg-lime-dim";
+---
+
+<header class="sticky top-0 z-50 border-b border-line bg-ink/80 backdrop-blur-md">
+  <div class="container-bl flex h-16 items-center justify-between md:h-20">
+    <a
+      href="/"
+      class="font-display text-2xl uppercase leading-none tracking-tight text-fg md:text-[1.65rem]"
+      aria-label={`${name} — home`}
+    >
+      {name}<span class="text-lime">.</span>
+    </a>
+
+    <nav class="hidden items-center gap-9 md:flex" aria-label="Primary">
+      {
+        nav.map((link) => (
+          <a
+            href={link.href}
+            class="font-mono text-xs uppercase tracking-[0.18em] text-fg-muted transition-colors duration-200 hover:text-fg"
+          >
+            {link.label}
+          </a>
+        ))
+      }
+      <a href="#contact" class={ctaClass}>Get Started</a>
+    </nav>
+
+    <button
+      id="menu-toggle"
+      type="button"
+      class="-mr-1 inline-flex h-10 w-10 items-center justify-center text-fg md:hidden"
+      aria-label="Open menu"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+    >
+      <svg id="icon-open" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true">
+        <line x1="3" y1="7" x2="21" y2="7"></line>
+        <line x1="3" y1="12" x2="21" y2="12"></line>
+        <line x1="3" y1="17" x2="21" y2="17"></line>
+      </svg>
+      <svg id="icon-close" class="hidden" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true">
+        <line x1="5" y1="5" x2="19" y2="19"></line>
+        <line x1="19" y1="5" x2="5" y2="19"></line>
+      </svg>
+    </button>
+  </div>
+
+  <div id="mobile-menu" class="hidden border-t border-line bg-ink md:hidden">
+    <nav class="container-bl flex flex-col py-3" aria-label="Mobile">
+      {
+        nav.map((link) => (
+          <a
+            href={link.href}
+            class="border-b border-line py-4 font-mono text-sm uppercase tracking-[0.18em] text-fg-muted transition-colors hover:text-fg"
+          >
+            {link.label}
+          </a>
+        ))
+      }
+      <a href="#contact" class={`${ctaClass} mt-5 w-full`}>Get Started</a>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const toggle = document.getElementById("menu-toggle");
+  const menu = document.getElementById("mobile-menu");
+  const iconOpen = document.getElementById("icon-open");
+  const iconClose = document.getElementById("icon-close");
+
+  function setMenu(open: boolean) {
+    if (!toggle || !menu || !iconOpen || !iconClose) return;
+    menu.classList.toggle("hidden", !open);
+    iconOpen.classList.toggle("hidden", open);
+    iconClose.classList.toggle("hidden", !open);
+    toggle.setAttribute("aria-expanded", String(open));
+    toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+  }
+
+  toggle?.addEventListener("click", () => {
+    setMenu(menu?.classList.contains("hidden") ?? true);
+  });
+  menu?.querySelectorAll("a").forEach((a) =>
+    a.addEventListener("click", () => setMenu(false)),
+  );
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") setMenu(false);
+  });
+</script>

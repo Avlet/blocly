@@ -1,0 +1,22 @@
+---
+interface Props {
+  id?: string;
+  class?: string;
+  /** Adds a hairline divider at the top of the section. */
+  bordered?: boolean;
+}
+const { id, class: className = "", bordered = false } = Astro.props;
+---
+
+<section
+  id={id}
+  class:list={[
+    "scroll-mt-20 py-20 md:py-28",
+    bordered && "border-t border-line",
+    className,
+  ]}
+>
+  <div class="container-bl">
+    <slot />
+  </div>
+</section>

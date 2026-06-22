@@ -1,0 +1,21 @@
+---
+interface Props {
+  /** Show the short leading rule used in the hero eyebrow. */
+  withRule?: boolean;
+  class?: string;
+}
+const { withRule = false, class: className = "" } = Astro.props;
+---
+
+{
+  withRule ? (
+    <p class:list={["eyebrow flex items-center gap-3", className]}>
+      <span class="inline-block h-px w-8 bg-lime" />
+      <slot />
+    </p>
+  ) : (
+    <p class:list={["eyebrow", className]}>
+      <slot />
+    </p>
+  )
+}
