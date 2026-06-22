@@ -24,9 +24,8 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.origins_list,
-    allow_credentials=True,
-    allow_methods=["GET", "POST", "OPTIONS"],
+    allow_origins=["https://aapka-frontend-ka-naya-url.onrender.com"], # Yahan frontend ka live URL dalein
+    allow_methods=["*"],
     allow_headers=["*"],
 )
 
